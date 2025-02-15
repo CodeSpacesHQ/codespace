@@ -13,6 +13,7 @@ import { Blog } from "./collections/Blog";
 import { Gallery } from "./collections/Gallery";
 import { UpcomingEvents } from "./collections/UpcomingEvents";
 import { PastEvents } from "./collections/PastEvents";
+// import { Forms } from "./collections/Forms";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

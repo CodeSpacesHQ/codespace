@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --font-selector: R0Y7TWFucm9wZS01MDA=;
+    --framer-font-family: "Manrope", "Manrope Placeholder", sans-serif;
+    --framer-font-size: 18px;
+    --framer-font-weight: 500;
+    --framer-line-height: 1.6em;
+    --framer-text-alignment: left;
+    --framer-text-color: rgb(122, 122, 122);
+    --framer-paragraph-spacing: 0;
+    --framer-text-stroke-width: initial;
+    --framer-text-stroke-color: initial;
+    --framer-font-open-type-features: initial;
+    --framer-font-variation-axes: normal;
+    --framer-text-wrap: initial;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
+    background-color: #fff;
+    color: rgb(122, 122, 122);
+    font-family: var(--framer-font-family);
+    font-size: var(--framer-font-size);
+    line-height: var(--framer-line-height);
+    font-weight: var(--framer-font-weight);
+    letter-spacing: var(--framer-letter-spacing, 0);
+    text-transform: var(--framer-text-transform, none);
+    text-decoration: var(--framer-text-decoration, none);
+    font-feature-settings: var(--framer-font-open-type-features);
+    font-variation-settings: var(--framer-font-variation-axes);
+    text-wrap: var(--framer-text-wrap-override, var(--framer-text-wrap));
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    font-family: var(--framer-font-family);
+    font-style: normal;
+    font-weight: var(--framer-font-weight);
+    color: var(--framer-text-color);
+    font-size: calc(var(--framer-font-size) * var(--framer-font-size-scale, 1));
+    letter-spacing: var(--framer-letter-spacing, 0);
+    text-transform: var(--framer-text-transform, none);
+    text-decoration: var(--framer-text-decoration, none);
+    line-height: var(--framer-line-height);
+    text-align: var(--framer-text-alignment);
+    -webkit-text-stroke-width: var(--framer-text-stroke-width);
+    -webkit-text-stroke-color: var(--framer-text-stroke-color);
+    font-feature-settings: var(--framer-font-open-type-features);
+    font-variation-settings: var(--framer-font-variation-axes);
+    text-wrap: var(--framer-text-wrap-override, var(--framer-text-wrap));
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
