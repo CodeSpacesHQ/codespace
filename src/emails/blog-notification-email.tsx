@@ -18,6 +18,8 @@ interface BlogNotificationEmailProps {
     excerpt: string;
     authorName: string;
     blogUrl: string;
+    publishedAt?: string;
+    imageUrl?: string;
 }
 
 export const BlogNotificationEmail: React.FC<BlogNotificationEmailProps> = ({
@@ -25,10 +27,12 @@ export const BlogNotificationEmail: React.FC<BlogNotificationEmailProps> = ({
     excerpt,
     authorName,
     blogUrl,
+    publishedAt,
+    imageUrl,
 }) => (
     <Html>
         <Head />
-        <Preview>New Blog Post: {title}</Preview>
+        <Preview>{excerpt}</Preview>
         <Body style={{
             backgroundColor: '#f6f9fc',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -43,44 +47,37 @@ export const BlogNotificationEmail: React.FC<BlogNotificationEmailProps> = ({
             }}>
                 <Section>
                     <Heading style={{
-                        fontSize: '24px',
-                        fontWeight: '600',
-                        color: '#1f2937',
-                        marginBottom: '24px',
-                        textAlign: 'center' as const,
-                        lineHeight: '1.3'
+                        fontSize: '28px',
+                        fontWeight: 700,
+                        color: '#111827',
+                        margin: '0 0 12px',
+                        lineHeight: '1.25'
                     }}>
-                        New Blog Post Published!
+                        {title}
                     </Heading>
-
-                    <Section style={{
-                        background: '#f8fafc',
-                        borderRadius: '6px',
-                        padding: '20px',
-                        marginBottom: '24px'
+                    <Text style={{
+                        fontSize: '14px',
+                        color: '#6b7280',
+                        margin: 0
                     }}>
-                        <Text style={{
-                            fontSize: '20px',
-                            color: '#1f2937',
-                            fontWeight: '600',
-                            margin: '0 0 12px'
-                        }}>
-                            {title}
-                        </Text>
+                        {authorName}{publishedAt ? ` · ${publishedAt}` : ''}
+                    </Text>
+
+                    {imageUrl ? (
+                        <Section>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={imageUrl} alt="" width="100%" style={{ borderRadius: '8px', marginTop: '16px' }} />
+                        </Section>
+                    ) : null}
+
+                    <Section style={{ marginTop: '16px' }}>
                         <Text style={{
                             fontSize: '16px',
                             color: '#374151',
-                            margin: '0 0 16px',
-                            lineHeight: '1.5'
+                            margin: '0 0 8px',
+                            lineHeight: '1.6'
                         }}>
                             {excerpt}
-                        </Text>
-                        <Text style={{
-                            fontSize: '14px',
-                            color: '#6b7280',
-                            margin: '0'
-                        }}>
-                            By {authorName}
                         </Text>
                     </Section>
 
@@ -99,7 +96,7 @@ export const BlogNotificationEmail: React.FC<BlogNotificationEmailProps> = ({
                                 marginTop: '16px'
                             }}
                         >
-                            Read the Full Post
+                            Read this on Code Space
                         </Button>
                     </Section>
 

@@ -14,7 +14,6 @@ export async function sendNewsletterEmail({ subject, html, text }: SendNewslette
     }
 
     try {
-        // First, get all subscribers from the newsletter group
         const subscribersResponse = await fetch(
             `${SENDER_API_URL}/subscribers?group=${NEWSLETTER_GROUP_ID}&limit=1000`,
             {
@@ -37,7 +36,6 @@ export async function sendNewsletterEmail({ subject, html, text }: SendNewslette
             return;
         }
 
-        // Send the email campaign
         const response = await fetch(`${SENDER_API_URL}/campaigns`, {
             method: 'POST',
             headers: {

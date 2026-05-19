@@ -151,6 +151,13 @@ export default function LetterPage() {
                     <h2>Our efforts and results last year not only showed us how far we&apos;ve come but also proved that no challenge can stop us. Looking back, I&apos;m incredibly proud of the progress we&apos;ve made as a community. It&apos;s incredible to think that everything you see today started as a simple WhatsApp conversation in 2021. Since then, we&apos;ve made small decisions that continue to impact the careers of Gen Zs across Africa.</h2>
 
                     <h2>We remain eternally grateful to our partners, sponsors, and individuals who unfailingly join us in our walk to create not just a community but a launchpad for Gen Zs who are dreamers, innovators, and builders. Thank you to everyone for believing in our vision and empowering us to transform the lives of thousands of young African tech talents.</h2>
+
+                    <div style={{ marginTop: 24 }}>
+                        <p style={{ fontWeight: 700 }}>Clinton Imaro</p>
+                        <p>
+                            <em>Founder, Code Space</em>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

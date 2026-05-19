@@ -156,8 +156,8 @@ export default async function Events() {
           learn, and elevate your tech journey!
         </p>
         <div className="w-full space-y-10 !mt-10">
-          {upcomingEvents?.docs?.map((event) => (
-            <UpcomingEvent key={event.id} event={event} />
+          {upcomingEvents?.docs?.map((event, index) => (
+            <UpcomingEvent key={event.id} event={event} priority={index === 0} />
           ))}
         </div>
       </Container>
@@ -195,6 +195,7 @@ const EventCard = ({ event }: { event: PastEvent }) => {
             alt={event?.eventTitle}
             fill
             className="object-cover rounded-sm"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
       </div>
@@ -212,7 +213,7 @@ const EventCard = ({ event }: { event: PastEvent }) => {
   );
 };
 
-const UpcomingEvent = ({ event }: { event: UpcomingEvent }) => {
+const UpcomingEvent = ({ event, priority = false }: { event: UpcomingEvent; priority?: boolean }) => {
   return (
     <div className="w-full flex md:flex-row flex-col gap-10">
       <div className="w-full md:max-w-sm max-w-full lg:max-h-full mx-auto flex-shrink-0 shadow-[0_0_20px_0_rgba(34,34,34,0.05)] aspect-square bg-white p-3 md:max-h-[440px] object-cover">
@@ -222,6 +223,8 @@ const UpcomingEvent = ({ event }: { event: UpcomingEvent }) => {
             alt={event?.eventTitle}
             fill
             className="object-cover h-full w-auto"
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 50vw"
           />
         </div>
       </div>

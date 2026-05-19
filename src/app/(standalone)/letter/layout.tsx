@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         description: "Discover Clinton Imaro's inspiring vision for Code Space in 2025. Read about our journey, impact on African tech talent, and ambitious plans to revolutionize the Gen Z tech community landscape in Africa.",
         creator: "@CodeSpaceHQ",
     },
-    authors: [{ name: "Clinton Imaro", url: "https://www.codespaces.org/about" }],
+    authors: [{ name: "Clinton Imaro", url: "https://www.linkedin.com/in/clintonimaro/" }],
 };
 
 export default function LetterLayout({

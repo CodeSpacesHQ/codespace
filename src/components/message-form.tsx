@@ -1,13 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MessageForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [mountTime, setMountTime] = useState<number>(0);
     const formRef = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        setMountTime(Date.now());
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,7 +27,9 @@ const MessageForm = () => {
             email: formData.get('email'),
             subject: formData.get('subject'),
             phoneNumber: `${formData.get('countryCode')} ${formData.get('phoneNumber')}`,
-            message: formData.get('message')
+            message: formData.get('message'),
+            website_url: formData.get('website_url'),
+            timestamp: mountTime,
         };
 
         try {
@@ -58,6 +65,17 @@ const MessageForm = () => {
             </div>
 
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+                <div className="absolute opacity-0 -z-10 w-0 h-0 overflow-hidden">
+                    <label htmlFor="website_url">Website URL</label>
+                    <input
+                        type="text"
+                        name="website_url"
+                        id="website_url"
+                        tabIndex={-1}
+                        autoComplete="off"
+                    />
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
                         <label className="text-sm">

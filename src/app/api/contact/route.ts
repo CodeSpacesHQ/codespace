@@ -106,9 +106,27 @@ async function sendContactEmail(formData: any) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, subject, message } = body;
+    const { email, subject, message, website_url, timestamp } = body;
+
+    if (website_url) {
+      return NextResponse.json(
+        { message: "Message sent successfully" },
+        { status: 200 }
+      );
+    }
 
     if (subject && message) {
+      const MIN_DURATION = 2000;
+      const submissionTime = Number(timestamp) || 0;
+      const duration = Date.now() - submissionTime;
+
+      if (!submissionTime || duration < MIN_DURATION) {
+        return NextResponse.json(
+          { message: "Message sent successfully" },
+          { status: 200 }
+        );
+      }
+
       await sendContactEmail(body);
       return NextResponse.json(
         { message: "Message sent successfully" },

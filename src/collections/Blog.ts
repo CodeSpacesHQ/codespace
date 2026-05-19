@@ -1,5 +1,6 @@
 import { checkIsCodespaceUser } from "@/lib/utils";
 import { CollectionConfig } from "payload";
+import { sendBlogBroadcast } from "@/lib/send-blog-broadcast";
 
 const retryOperation = async (operation: () => Promise<any>, maxRetries = 3, delay = 1000) => {
   for (let i = 0; i < maxRetries; i++) {
@@ -30,7 +31,6 @@ export const Blog: CollectionConfig = {
           }
 
           try {
-            // If setting this post as top story, update any existing top story to regular
             if (data.postType === 'top') {
               await retryOperation(async () => {
                 await req.payload.update({
@@ -56,7 +56,6 @@ export const Blog: CollectionConfig = {
               });
             }
 
-            // If setting this post as featured, unset featured from other posts
             if (data.isFeatured) {
               await retryOperation(async () => {
                 await req.payload.update({
@@ -83,10 +82,52 @@ export const Blog: CollectionConfig = {
             }
           } catch (error) {
             console.error('Error in beforeChange hook:', error);
-            // Continue with the operation even if the updates fail
           }
 
           return data;
+        }
+      },
+    ],
+    afterChange: [
+      async ({ doc, previousDoc, req }) => {
+        try {
+          const isNowPublished = doc?._status === "published";
+          const wasPublishedBefore = previousDoc?._status === "published";
+          if (!isNowPublished || wasPublishedBefore) {
+            return;
+          }
+
+          const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.codespaces.org";
+          const blogUrl = `${baseUrl}/blog/${doc.id}`;
+
+          let authorName = "Code Space";
+          try {
+            if (doc?.author && typeof doc.author === "object" && "name" in doc.author) {
+              authorName = (doc.author as any).name || authorName;
+            } else if (typeof doc?.author === "string" && doc.author) {
+              const author = await req.payload.findByID({ collection: "users", id: doc.author });
+              authorName = (author as any)?.name || authorName;
+            }
+          } catch {}
+
+          const subject = `${doc.title}`;
+          const { renderToStaticMarkup } = await import("react-dom/server");
+          const { BlogNotificationEmail } = await import("@/emails/blog-notification-email");
+          const html = renderToStaticMarkup(
+            BlogNotificationEmail({
+              title: doc.title,
+              excerpt: doc.excerpt,
+              authorName,
+              blogUrl,
+              publishedAt: new Date(doc.createdAt || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+              imageUrl: (doc as any)?.featuredImage?.url,
+            })
+          );
+          const text = `New blog post: ${doc.title}\n\n${doc.excerpt}\n\nBy ${authorName}\n\nRead here: ${blogUrl}`;
+
+          await sendBlogBroadcast({ subject, html, text, fromName: authorName });
+        } catch (error) {
+          console.error("Error sending blog publish notification:", error);
         }
       },
     ],

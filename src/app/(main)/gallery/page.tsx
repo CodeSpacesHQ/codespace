@@ -4,20 +4,23 @@ import JoinSection from "@/components/join-section";
 import SpaceBadge from "@/components/space-badge";
 import React from "react";
 import Container from "@/components/container";
-import { Galleries } from "@/types";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+
+export const revalidate = 60;
 
 async function getAlbums() {
-  const BASE_URL = process.env.BASE_URL;
+  const payload = await getPayload({ config: configPromise });
 
-  const response = await fetch(`${BASE_URL}/api/gallery`, {
-    next: { 
-      revalidate: 60 // Cache for 1 minute
-    }
+  const data = await payload.find({
+    collection: "gallery",
+    depth: 1,
+    limit: 100,
   });
-  const data: Galleries = await response.json();
 
   return data;
 }
@@ -44,18 +47,21 @@ export default async function GalleryPage() {
         </div>
       </Container>
 
-      <Container className="container gap-5 py-5 md:pb-20 md:pt-8">
+      <Container className="container gap-5 py-5 md:pb-20 md:pt-8 mt-10 md:mt-24">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
-          {albums?.docs?.map((album) => (
+          {albums?.docs?.map((album: any) => (
             <Link
-              href={album?.albumLink}
+              href={album?.albumLink || "#"}
               key={album?.id}
               className="group relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="aspect-[4/5] w-full">
-                <div
-                  className="h-full w-full bg-cover bg-center transform transition-transform duration-300 group-hover:scale-105"
-                  style={{ backgroundImage: `url(${album.coverImage.url})` }}
+              <div className="aspect-[4/5] w-full relative">
+                <Image
+                  src={album?.coverImage?.url}
+                  alt={album?.event || "Gallery Album"}
+                  fill
+                  className="object-cover object-center transform transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -5,9 +5,9 @@ import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import SmoothScroll from "@/components/smoothscroll";
 import ScrollToTop from "@/components/scroll-to-top";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 const duplicateSans = localFont({
   src: [
@@ -233,51 +233,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="msapplication-TileColor" content="#da532c" />
-        <meta name="theme-color" content="#6d6cd6" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <Script
-          id="home-theme-color"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{var isHome=location.pathname==='/'||location.pathname==='';var meta=document.querySelector('meta[name=\"theme-color\"]');if(meta){meta.setAttribute('content',isHome?'#6d6cd6':'#ffffff');}}catch(e){}})();",
-          }}
-        />
-        <Script
-          defer
-          data-domain="codespaces.org"
-          src="https://plausible.io/js/script.js"
-        />
         <Script
           id="json-ld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body
-        className={`${graphikSans.className} ${duplicateSans.variable} antialiased lenis lenis-smooth`}
-      >
+      <body className={`${graphikSans.className} ${duplicateSans.variable} antialiased lenis lenis-smooth`}>
         <SmoothScroll />
         <NavBar />
         <ScrollToTop />

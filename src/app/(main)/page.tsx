@@ -469,10 +469,12 @@ const Home = () => {
           <ImageCard
             src={"/images/hackathon.png"}
             className="sm:w-1/2 absolute top-1/2 right-4 sm:right-14 aspect-[6/4] -mt-20 rotate-[9deg] [&>#image-card]:h-[90%] shadow-[0_0_50px_0_rgba(34,34,34,0.05)]"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
           <ImageCard
             src={"/images/hackathon.png"}
             className="sm:w-1/2 absolute -top-16 sm:top-0 left-4 sm:left-14 aspect-[6/4] -rotate-3 [&>#image-card]:h-[90%] shadow-[0_0_50px_0_rgba(34,34,34,0.05)]"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </Container>

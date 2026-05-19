@@ -5,8 +5,14 @@ import React from "react";
 const ImageCard = ({
   className,
   src,
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { src?: ImageProps["src"] }) => {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  src?: ImageProps["src"];
+  priority?: boolean;
+  sizes?: string;
+}) => {
   return (
     <div
       className={cn("w-[280px] bg-white aspect-[10/11] shadow p-2", className)}
@@ -19,6 +25,8 @@ const ImageCard = ({
             fill
             alt="image"
             className="w-full h-full object-cover"
+            priority={priority}
+            sizes={sizes}
           />
         )}
       </div>
